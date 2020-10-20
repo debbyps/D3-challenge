@@ -51,7 +51,7 @@ var height = svgHeight - margin.top - margin.bottom;
 // Create an SVG wrapper, append an SVG group that will hold our chart,
 // and shift the latter by left and top margins.
 var svg = d3
-  .select(".scatter")
+  .select("#scatter")
   .append("svg")
   .attr("width", svgWidth)
   .attr("height", svgHeight);
@@ -76,16 +76,16 @@ function xScale(povertyData, chosenXAxis) {
 
 }
 
-// function used for updating xAxis var upon click on axis label
-function renderAxes(newXScale, xAxis) {
-  var bottomAxis = d3.axisBottom(newXScale);
+// // function used for updating xAxis var upon click on axis label
+// function renderAxes(newXScale, xAxis) {
+//   var bottomAxis = d3.axisBottom(newXScale);
 
-  xAxis.transition()
-    .duration(1000)
-    .call(bottomAxis);
+//   xAxis.transition()
+//     .duration(1000)
+//     .call(bottomAxis);
 
-  return xAxis;
-}
+//   return xAxis;
+// }
 
 // function used for updating circles group with a transition to
 // new circles
@@ -99,34 +99,34 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 }
 
 // function used for updating circles group with new tooltip
-function updateToolTip(chosenXAxis, circlesGroup) {
+// function updateToolTip(chosenXAxis, circlesGroup) {
 
-  var label;
+//   var label;
 
-  if (chosenXAxis === "poverty") {
-    label = "In Poverty (%):";
-  }
-  else {
-    label = "Age:";
-  }
+//   if (chosenXAxis === "poverty") {
+//     label = "In Poverty (%):";
+//   }
+//   else {
+//     label = "Age:";
+//   }
 
-  var toolTip = d3.tip()
-    .attr("#scatter","tooltip")
-    .offset([80, -60])
-    .html(d => `${d.abbr}<br>${label} ${d[chosenXAxis]}`);
+//   var toolTip = d3.tip()
+//     .attr("#scatter","tooltip")
+//     .offset([80, -60])
+//     .html(d => `${d.abbr}<br>${label} ${d[chosenXAxis]}`);
 
-  circlesGroup.call(toolTip);
+//   circlesGroup.call(toolTip);
 
-  circlesGroup.on("mouseover", function(data) {
-      toolTip.show(data);
-    })
-    // onmouseout event
-    .on("mouseout", function(data) {
-      toolTip.hide(data);
-    });
+//   circlesGroup.on("mouseover", function(data) {
+//       toolTip.show(data);
+//     })
+//     // onmouseout event
+//     .on("mouseout", function(data) {
+//       toolTip.hide(data);
+//     });
 
-  return circlesGroup;
-}
+//   return circlesGroup;
+// }
 
 // Retrieve data from the CSV file and execute everything below
 d3.csv('./assets/data/data.csv').then(povertyData => {
@@ -134,7 +134,7 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
   // parse data
   povertyData.forEach(data => {
     data.poverty = +data.poverty;
-    data.age = +data.age;
+    // data.age = +data.age;
     data.healthcare = +data.healthcare;
   });
 
@@ -165,7 +165,7 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
     .data(povertyData)
     .join("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
-    .attr("cy", d => yLinearScale(d.num_hits))
+    .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 20)
     .attr("fill", "pink")
     .attr("opacity", 0.5)
@@ -198,8 +198,8 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
     .classed("axis-text", true)
     .text("Lacks Healthcare(%)");
 
-  // updateToolTip function above csv import
-  var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+  // // updateToolTip function above csv import
+  // var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
   // x axis labels event listener
   labelsGroup.selectAll("text")
