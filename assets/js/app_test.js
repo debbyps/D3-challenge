@@ -105,16 +105,16 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
 // Step 2: create scale functions using povertyData
   var xLinearScale = xScale(povertyData, chosenXAxis);
 
-  // Create y scale function
+  //  Create y scale function
   var yLinearScale = d3.scaleLinear()
     .domain([0, d3.max(povertyData, d => d.healthcare)])
     .range([height, 0]);
 
-  // Create initial axis functions
+  // Step 3: Create initial axis functions
   var bottomAxis = d3.axisBottom(xLinearScale);
   var leftAxis = d3.axisLeft(yLinearScale);
 
-  // append x axis
+  // Step 4: append x axis
   var xAxis = chartGroup.append("g")
     .classed("x-axis", true)
     .attr("transform", `translate(0, ${height})`)
@@ -124,7 +124,7 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
   chartGroup.append("g")
     .call(leftAxis);
 
-  // append initial circles
+  // Step 5: append initial circles
   var circlesGroup = chartGroup.selectAll("circle")
     .data(povertyData)
     .join("circle")
