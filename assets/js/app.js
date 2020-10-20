@@ -76,16 +76,16 @@ function xScale(povertyData, chosenXAxis) {
 
 }
 
-// // function used for updating xAxis var upon click on axis label
-// function renderAxes(newXScale, xAxis) {
-//   var bottomAxis = d3.axisBottom(newXScale);
+// function used for updating xAxis var upon click on axis label
+function renderAxes(newXScale, xAxis) {
+  var bottomAxis = d3.axisBottom(newXScale);
 
-//   xAxis.transition()
-//     .duration(1000)
-//     .call(bottomAxis);
+  xAxis.transition()
+    .duration(1000)
+    .call(bottomAxis);
 
-//   return xAxis;
-// }
+  return xAxis;
+}
 
 // function used for updating circles group with a transition to
 // new circles
@@ -167,7 +167,7 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 20)
-    .attr("fill", "pink")
+    .attr("fill", "blue")
     .attr("opacity", 0.5)
     .attr("stroke", "black");
 
