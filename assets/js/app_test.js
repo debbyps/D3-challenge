@@ -64,34 +64,34 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 }
 
 // function used for updating circles group with new tooltip
-// function updateToolTip(chosenXAxis, circlesGroup) {
+function updateToolTip(chosenXAxis, circlesGroup) {
 
-//   var label;
+  var label;
 
-//   if (chosenXAxis === "poverty") {
-//     label = "In Poverty (%):";
-//   }
-//   else {
-//     label = "Age:";
-//   }
+  if (chosenXAxis === "poverty") {
+    label = "In Poverty (%):";
+  }
+  else {
+    label = "Age:";
+  }
 
-//   var toolTip = d3.tip()
-//     .attr("#scatter","tooltip")
-//     .offset([80, -60])
-//     .html(d => `${d.abbr}<br>${label} ${d[chosenXAxis]}`);
+  var toolTip = d3.tip()
+    .attr("circle","tooltip")
+    .offset([80, -60])
+    .html(d => `${d.abbr}<br>${label} ${d[chosenXAxis]}`);
 
-//   circlesGroup.call(toolTip);
+  circlesGroup.call(toolTip);
 
-//   circlesGroup.on("mouseover", function(data) {
-//       toolTip.show(data);
-//     })
-//     // onmouseout event
-//     .on("mouseout", function(data) {
-//       toolTip.hide(data);
-//     });
+  circlesGroup.on("click", function(data) {
+      toolTip.show(data);
+    })
+    // onmouseout event
+    .on("mouseout", function(data) {
+      toolTip.hide(data);
+    });
 
-//   return circlesGroup;
-// }
+  return circlesGroup;
+}
 
 // Step 1: Parse data and cast it as numeric
 d3.csv('./assets/data/data.csv').then(povertyData => {
@@ -124,7 +124,7 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
   chartGroup.append("g")
     .call(leftAxis);
 
-  // Step 5: append initial circles
+  // Step 5: create circle groups and append initial circles
   var circlesGroup = chartGroup.selectAll("circle")
     .data(povertyData)
     .join("circle")
@@ -133,7 +133,8 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
     .attr("r", 20)
     .attr("fill", "blue")
     .attr("opacity", 0.5)
-    .attr("stroke", "black");
+    .attr("stroke", "black")
+    .attr("stroke-width","1px");
 
   // Create group for two x-axis labels
   var labelsGroup = chartGroup.append("g")
@@ -159,11 +160,11 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
     .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
-    .classed("axis-text", true)
+    // .classed("axis-text", true)
     .text("Lacks Healthcare(%)");
 
   // // updateToolTip function above csv import
-  // var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+  var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
   // x axis labels event listener
   labelsGroup.selectAll("text")
@@ -188,7 +189,7 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
         circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
 
         // // updates tooltips with new info
-        // circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+        circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
         // changes classes to change bold text
         if (chosenXAxis === "age") {
