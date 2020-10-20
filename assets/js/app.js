@@ -1,40 +1,5 @@
 // // @TODO: YOUR CODE HERE!
 // // Define SVG area dimensions
-// var svgWidth = 960;
-// var svgHeight = 560;
-
-// // Define the chart's margins as an object
-// var chartMargin = {
-//   top: 30,
-//   right: 30,
-//   bottom: 30,
-//   left: 30
-// };
-
-// // Define dimensions of the chart area
-// var chartWidth = svgWidth - chartMargin.left - chartMargin.right;
-// var chartHeight = svgHeight - chartMargin.top - chartMargin.bottom;
-
-// // Select scatter, append SVG area to it, and set the dimensions
-// var svg = d3
-//   .select("scatter")
-//   .append("svg")
-//   .attr("height", svgHeight)
-//   .attr("width", svgWidth);
-
-// // Append a group to the SVG area and shift ('translate') it to the right and down to adhere
-// // to the margins set in the "chartMargin" object.
-// var chartGroup = svg.append("g")
-//   .attr("transform", `translate(${chartMargin.left}, ${chartMargin.top})`);
-
-// // load in the csv
-// d3.csv('./assets/data/data.csv').then((acsData) => {
-//     console.log(acsData);
-
-//     let healthcare = acsData.map(d => d.healthcare)
-//     console.log(healthcare)
-
-// }).catch(error => console.log(error))
 var svgWidth = 960;
 var svgHeight = 500;
 
@@ -223,8 +188,8 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
         // updates circles with new x values
         circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
 
-        // updates tooltips with new info
-        circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+        // // updates tooltips with new info
+        // circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
         // changes classes to change bold text
         if (chosenXAxis === "age") {
