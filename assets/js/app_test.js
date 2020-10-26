@@ -157,7 +157,6 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
     .attr("y", 0 - margin.left)
     .attr("x", 0 - (height / 2))
     .attr("dy", "1em")
-    // .classed("axis-text", true)
     .text("Lacks Healthcare(%)");
 
   // // updateToolTip function above csv import
