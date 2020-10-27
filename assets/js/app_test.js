@@ -132,7 +132,8 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 15)
     .classed("stateCircle", true)
-    .classed("stateText",true);
+    .classed("stateText",true)
+    ;
 
   // Create group for two x-axis labels
   var labelsGroup = chartGroup.append("g")
