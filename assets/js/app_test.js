@@ -76,13 +76,13 @@ function updateToolTip(chosenXAxis, circlesGroup) {
   }
 
   var toolTip = d3.tip()
-    .attr("circle","d3-tip")
+    .attr("class","d3-tip")
     .offset([80, -60])
     .html(d => `${d.abbr}<br>${label} ${d[chosenXAxis]}`)
 
   circlesGroup.call(toolTip);
 
-  circlesGroup.on("click", function(data) {
+  circlesGroup.on("mouseover", function(data) {
       toolTip.show(data, this)
     })
     // onmouseout event
@@ -123,15 +123,16 @@ d3.csv('./assets/data/data.csv').then(povertyData => {
   // append y axis
   chartGroup.append("g")
     .call(leftAxis);
-
+  
   // Step 5: create circle groups and append initial circles
   var circlesGroup = chartGroup.selectAll("circle")
     .data(povertyData)
     .join("circle")
     .attr("cx", d => xLinearScale(d[chosenXAxis]))
     .attr("cy", d => yLinearScale(d.healthcare))
-    .attr("r", 20)
-    .classed("stateCircle", true);
+    .attr("r", 15)
+    .classed("stateCircle", true)
+    .classed("stateText",true);
 
   // Create group for two x-axis labels
   var labelsGroup = chartGroup.append("g")
